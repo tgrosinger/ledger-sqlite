@@ -1,3 +1,8 @@
+"""
+Convert the provided ledger file into a SQLite database.
+Configure input and output files with environment variables.
+"""
+
 import os
 import os.path
 import sys

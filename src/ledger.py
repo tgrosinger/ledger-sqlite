@@ -7,7 +7,7 @@ import typing
 class AmountQuantity(typing.TypedDict):
     decimalMantissa: int
     decimalPlaces: int
-    floatingPoint: int
+    floatingPoint: float
 
 
 class AmountStyle(typing.TypedDict):

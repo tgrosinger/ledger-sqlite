@@ -29,7 +29,7 @@
 ; commodity $
 
 2008/01/01 income
-    assets:bank:checking  $1
+    assets:bank:checking  $1.45
     income:salary
 
 2008/06/01 gift
