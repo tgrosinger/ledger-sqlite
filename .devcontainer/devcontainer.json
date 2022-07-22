@@ -1,0 +1,20 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+	"name": "Ledger SQLite",
+	"context": "..",
+	"dockerFile": "../Dockerfile",
+	"containerEnv": {
+		"DEBIAN_FRONTEND": "noninteractive",
+		"LEDGER_FILE": "/workspaces/ledger-sqlite/data/example.ledger",
+		"OUTPUT_FILE": "/workspaces/ledger-sqlite/data/example.sqlite"
+	},
+	"onCreateCommand": "/usr/local/bin/python -m pip install -U mypy pylint black",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance"
+			]
+		}
+	}
+}

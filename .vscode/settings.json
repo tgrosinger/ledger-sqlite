@@ -1,0 +1,18 @@
+{
+    "python.formatting.provider": "black",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyCategorySeverity.error":"Warning",
+    "python.linting.mypyArgs": [
+        "--follow-imports=silent",
+        "--show-column-numbers",
+        "--disallow-untyped-defs",
+        "--disallow-incomplete-defs",
+        "--disallow-untyped-calls",
+        "--warn-redundant-casts",
+        "--warn-return-any",
+        "--strict",
+        "--strict-equality"
+    ]
+}
