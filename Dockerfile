@@ -12,4 +12,4 @@ ENV LEDGER_FILE=/data/all.ledger
 ENV OUTPUT_FILE=/data/all.sqlite
 ENV OVERWRITE_OUTPUT=true
 
-ENTRYPOINT ["python", "/code/export.py"]
+ENTRYPOINT ["python", "/code/main.py"]

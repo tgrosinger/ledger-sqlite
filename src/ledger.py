@@ -34,7 +34,7 @@ class Posting(typing.TypedDict):
     pdate2: str | None
     poriginal: str | None
     pstatus: str  # TODO: Enum?
-    ptags: List[str]
+    ptags: List[List[str]]
     ptransaction_: int
     ptype: str  # TODO: Enum?
 

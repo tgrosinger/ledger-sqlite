@@ -130,7 +130,7 @@ def write_transactions(cursor: sqlite3.Cursor, txs: List[Transaction]) -> None:
                     posting.get("paccount"),
                     get_posting_amount(posting),
                     posting.get("pstatus"),
-                    ",".join(posting.get("ptags") or []),
+                    ",".join([":".join(x) for x in posting.get("ptags") or []]),
                     posting.get("pcomment"),
                 ],
             )
