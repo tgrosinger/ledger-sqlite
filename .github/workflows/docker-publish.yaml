@@ -16,10 +16,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Retrieve tag name
-        id: tag
-        run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
-
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -43,7 +39,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          tags: ${{ steps.tag.outputs.TAG }}
+          tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64,linux/arm64
           push: true
           labels: ${{ steps.meta.outputs.labels }}
