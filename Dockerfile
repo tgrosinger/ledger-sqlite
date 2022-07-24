@@ -1,5 +1,4 @@
-# TODO: Change this to a multiarch hledger image
-FROM dastapov/hledger:1.26 as hledger
+FROM ghcr.io/tgrosinger/hledger-multiarch:1.26.1 as hledger
 
 FROM library/python:3.10-slim
 
