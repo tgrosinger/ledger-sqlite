@@ -3,7 +3,8 @@ FROM dastapov/hledger:1.26 as hledger
 
 FROM library/python:3.10-slim
 
-RUN apt install cron && \
+RUN apt update && \
+    apt install -y cron && \
     apt-get clean && \
     rm -rf /var/lib/{apt,dpkg,cache,log}
 
