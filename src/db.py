@@ -44,6 +44,7 @@ def create_tables(cursor: sqlite3.Cursor) -> None:
         (
             id integer,
             date text,
+            description text,
             comment text,
             cleared integer,
             tags text
@@ -57,6 +58,7 @@ def create_tables(cursor: sqlite3.Cursor) -> None:
         (
             transaction_id integer,
             date text,
+            description text,
             account text,
             amount real,
             cleared integer,
@@ -106,14 +108,15 @@ def write_transactions(cursor: sqlite3.Cursor, txs: List[Transaction]) -> None:
             """
             INSERT INTO transactions
             (
-                id, date, comment, cleared, tags
+                id, date, description, comment, cleared, tags
             ) VALUES (
-                ?, ?, ?, ?, ?
+                ?, ?, ?, ?, ?, ?
             )
             """,
             [
                 transaction.get("tindex"),
                 transaction.get("tdate"),
+                transaction.get("tdescription"),
                 comment,
                 transaction.get("tstatus"),
                 ",".join(transaction.get("ttags") or []),
@@ -143,14 +146,15 @@ def write_transactions(cursor: sqlite3.Cursor, txs: List[Transaction]) -> None:
                 """
                 INSERT INTO postings
                 (
-                    transaction_id, date, account, amount, cleared, tags, comment
+                    transaction_id, date, description, account, amount, cleared, tags, comment
                 ) VALUES (
-                    ?, ?, ?, ?, ?, ?, ?
+                    ?, ?, ?, ?, ?, ?, ?, ?
                 )
                 """,
                 [
                     transaction.get("tindex"),
                     transaction.get("tdate"),
+                    transaction.get("tdescription"),
                     posting.get("paccount"),
                     get_posting_amount(posting),
                     status,
