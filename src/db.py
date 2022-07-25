@@ -52,6 +52,7 @@ def create_tables(cursor: sqlite3.Cursor) -> None:
         CREATE TABLE postings
         (
             transaction_id integer,
+            date text,
             account text,
             amount real,
             cleared integer,
@@ -116,21 +117,34 @@ def write_transactions(cursor: sqlite3.Cursor, txs: List[Transaction]) -> None:
             continue
 
         for posting in postings:
+            status = posting.get("pstatus")
+            if status == "Unmarked":
+                status = transaction.get("tstatus")
+
+            comment = posting.get("pcomment")
+            if comment is None or comment == "":
+                comment = transaction.get("tcomment")
+
+            tags = ",".join([":".join(x) for x in posting.get("ptags") or []])
+            if tags == "":
+                tags = ",".join(transaction.get("ttags") or [])
+
             cursor.execute(
                 """
                 INSERT INTO postings
                 (
-                    transaction_id, account, amount, cleared, tags, comment
+                    transaction_id, date, account, amount, cleared, tags, comment
                 ) VALUES (
-                    ?, ?, ?, ?, ?, ?
+                    ?, ?, ?, ?, ?, ?, ?
                 )
                 """,
                 [
                     transaction.get("tindex"),
+                    transaction.get("tdate"),
                     posting.get("paccount"),
                     get_posting_amount(posting),
-                    posting.get("pstatus"),
-                    ",".join([":".join(x) for x in posting.get("ptags") or []]),
-                    posting.get("pcomment"),
+                    status,
+                    tags,
+                    comment,
                 ],
             )
