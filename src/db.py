@@ -30,8 +30,12 @@ class CursorContextManager:
 
 def create_tables(cursor: sqlite3.Cursor) -> None:
     """
-    Create the necessary tables in the provided database.
+    Create the necessary tables in the provided database. Will first attempt to
+    drop the tables if they already exist.
     """
+
+    cursor.execute("DROP TABLE IF EXISTS transactions")
+    cursor.execute("DROP TABLE IF EXISTS postings")
 
     # SQLite data types: https://www.sqlite.org/datatype3.html
     cursor.execute(
@@ -94,6 +98,10 @@ def write_transactions(cursor: sqlite3.Cursor, txs: List[Transaction]) -> None:
     """
 
     for transaction in txs:
+        comment = transaction.get("tcomment")
+        if comment is not None:
+            comment = comment.strip()
+
         cursor.execute(
             """
             INSERT INTO transactions
@@ -106,7 +114,7 @@ def write_transactions(cursor: sqlite3.Cursor, txs: List[Transaction]) -> None:
             [
                 transaction.get("tindex"),
                 transaction.get("tdate"),
-                transaction.get("tcomment"),
+                comment,
                 transaction.get("tstatus"),
                 ",".join(transaction.get("ttags") or []),
             ],
@@ -124,6 +132,8 @@ def write_transactions(cursor: sqlite3.Cursor, txs: List[Transaction]) -> None:
             comment = posting.get("pcomment")
             if comment is None or comment == "":
                 comment = transaction.get("tcomment")
+            if comment is not None:
+                comment = comment.strip()
 
             tags = ",".join([":".join(x) for x in posting.get("ptags") or []])
             if tags == "":

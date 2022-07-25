@@ -32,7 +32,6 @@ if os.path.exists(output_file):
         sys.exit(1)
     else:
         print("Output file exists. Overwriting.")
-        os.remove(output_file)
 
 txs = get_transactions(ledger_file)
 
