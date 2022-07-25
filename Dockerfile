@@ -19,4 +19,4 @@ ENV OVERWRITE_OUTPUT=true
 ENV CRONTAB_SCHEDULE="0 15 * * *"
 
 ENTRYPOINT ["sh", "/entrypoint.sh"]
-CMD ["crond", "-f", "-l", "0"]
+CMD ["cron", "-f", "-l", "0"]
